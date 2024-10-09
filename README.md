@@ -1,0 +1,2 @@
+# rag-chat
+FastAPI app integrates OpenAI and Pinecone to handle PDF uploads and question-answering through retrieval-augmented generation (RAG). It processes PDFs, stores data in a vector store (Pinecone), and uses history-aware retrieval for Q&amp;A tasks.  Resources

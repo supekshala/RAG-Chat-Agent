@@ -13,33 +13,77 @@
 <body>
     <div class="container">
         <div class="left-panel">
-            <h2>Document Upload</h2>
-            <div class="upload-area">
-                <input type="file" id="pdf-upload" accept=".pdf">
-                <label for="pdf-upload" id="upload-button">
-                    <i class="fas fa-cloud-upload-alt"></i> Choose PDF
-                </label>
-                <div class="loader" id="upload-loader"></div>
-                <p id="upload-status"></p>
+            <h2>Data Sources</h2>
+            <div class="upload-section">
+                <h3>Document Upload</h3>
+                <div class="upload-area">
+                    <input type="file" id="pdf-upload" accept=".pdf,.csv,.geojson,.shp">
+                    <label for="pdf-upload" id="upload-button">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload Files
+                    </label>
+                    <div class="file-types">Supported: PDF, CSV, GeoJSON, Shapefile</div>
+                    <div class="loader" id="upload-loader"></div>
+                    <p id="upload-status"></p>
+                </div>
+            </div>
+            
+            <div class="analysis-options">
+                <h3>Analysis Settings</h3>
+                <div class="option-group">
+                    <label for="analysis-type">Analysis Type:</label>
+                    <select id="analysis-type">
+                        <option value="spatial-correlation">Spatial Correlation</option>
+                        <option value="hotspot">Hotspot Analysis</option>
+                        <option value="cluster">Cluster Analysis</option>
+                        <option value="regression">Spatial Regression</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="confidence-level">Confidence Level:</label>
+                    <select id="confidence-level">
+                        <option value="0.90">90%</option>
+                        <option value="0.95">95%</option>
+                        <option value="0.99">99%</option>
+                    </select>
+                </div>
             </div>
         </div>
+
         <div class="chat-area">
             <div class="chat-header">
-                AI Assistant
+                <div class="header-title">
+                    <i class="fas fa-globe-americas"></i>
+                    Geospatial Analysis Assistant
+                </div>
+                <div class="header-controls">
+                    <button id="export-btn" title="Export Analysis">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button id="clear-btn" title="Clear Chat">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
             </div>
+            <div class="visualization-area" id="map-view"></div>
             <div class="chat-messages" id="chat-messages"></div>
             <div class="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
             <div class="input-area">
-                <input type="text" id="chat-input" placeholder="Type your message...">
-                <button id="send-button"><i class="fas fa-paper-plane"></i></button>
+                <textarea id="chat-input" 
+                    placeholder="Ask questions about your geospatial data or request specific analyses..."
+                    rows="2"></textarea>
+                <button id="send-button">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
         </div>
     </div>
+
+    <!-- Additional required libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.0.3/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css">
     <script src="script.js"></script>
 </body>
 </html>

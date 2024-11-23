@@ -5,3 +5,7 @@ FastAPI app integrates OpenAI and Pinecone to handle PDF uploads and question-an
 # run backend
 
 uvicorn main:app --reload --env-file .env
+python3 -m http.server 8080
+pip install -r requirements.txt
+
+

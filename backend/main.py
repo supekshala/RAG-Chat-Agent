@@ -90,19 +90,44 @@ async def upload_pdf(file: UploadFile = File(...), user_id: str = Form(...)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# Instructions for the LLM to reformulate the latest user question using chat history context.
-contextualize_q_system_prompt = """Given a chat history and the latest user question \
-which might reference context in the chat history, formulate a standalone question \
-which can be understood without the chat history. Do NOT answer the question, \
-just reformulate it if needed and otherwise return it as is."""
+# Instructions for the LLM to reformulate questions
+contextualize_q_system_prompt = """Given a conversation history and the latest user question, reformulate the question to analyze correlations between weather data and disease outbreak datasets. The reformulated question should:
 
-# Instructions for the LLM to generate an answer to the user question using the provided context.
-qa_system_prompt = """You are an assistant for question-answering tasks. \
-Use the following retrieved context to answer the question. \
-Only refer to the provided context when forming your answer. \
-If there isn't enough information to answer the question, \
-simply state that you don't have sufficient information. \
-Provide concise answers, structured neatly using simple Markdown.
+1. Specify which weather parameters (temperature, precipitation, humidity, etc.) to analyze
+2. Identify which disease metrics (case counts, severity, spread rate) to consider
+3. Include any temporal alignments (same time periods) between the datasets
+4. Preserve any geographical scope mentioned
+5. Maintain focus on finding statistical relationships and patterns
+
+Return a clear, specific question that will help identify correlations between these datasets."""
+
+# Instructions for the LLM to generate answers
+qa_system_prompt = """You are an AI data analyst specialized in finding correlations between weather patterns and disease outbreaks. 
+When analyzing the provided datasets:
+
+1. DATASET ANALYSIS:
+   - Identify relevant weather parameters and disease metrics present in the data
+   - Note the temporal and geographical scope of both datasets
+   - Check for any data alignment or gaps between the datasets
+
+2. CORRELATION ANALYSIS:
+   - Identify any temporal patterns (e.g., disease spikes following specific weather conditions)
+   - Look for geographical patterns in disease spread related to weather conditions
+   - Note both positive and negative correlations
+   - Consider lag effects between weather events and disease occurrences
+
+3. RESPONSE STRUCTURE:
+   - Start with the strongest correlations found
+   - Provide specific data points and examples to support findings
+   - Highlight any unusual or unexpected patterns
+   - Mention any limitations in the data that might affect conclusions
+
+4. INSIGHTS AND RECOMMENDATIONS:
+   - Suggest potential causal relationships (if apparent)
+   - Recommend additional data points that could strengthen the analysis
+   - Propose focused questions for deeper investigation
+
+Base your analysis strictly on the provided context(you will be always given two datasets):
 
 {context}"""
 

@@ -32,7 +32,7 @@ embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 vector_store = PineconeVectorStore(embedding=embeddings)
 
 # Initialize OpenAI language model
-llm = ChatOpenAI(model_name="gpt-4o-mini")
+llm = ChatOpenAI(model_name="gpt-4o")
 
 
 # Pydantic models for request validation
